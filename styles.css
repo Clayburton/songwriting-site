@@ -1994,3 +1994,18 @@ html.embedded .ck-sitebar, body.embedded .ck-sitebar { display:none; }
 /* READABILITY (Oct 14): small coloured text keeps 4.5:1 in the dark look too */
 html[data-theme=dark] .sw-rhyme-legend span { filter:brightness(1.7); }
 html[data-theme=dark] .sw-transport button { color:#211f1c; }
+
+/* iPHONE DUO (Oct 14): the Duo stands beside the iPad, one family of devices, in the same dark bezel */
+.sw-devices { display:flex; align-items:flex-end; gap:22px; margin:40px 40px 40px 0; }
+.sw-devices .sw-ipad { margin:0; flex:1 1 auto; min-width:0; }
+.sw-duo { flex:0 0 25%; margin:0; padding:6px; background:#1f1d1a; border-radius:16px; box-shadow:0 0 0 1px #3a3631, 14px 22px 40px var(--sw-shadow); }
+.sw-duo img { display:block; width:100%; height:auto; border-radius:11px; }
+html[data-theme=dark] .sw-duo { box-shadow:0 0 0 1px #4b443b, 14px 22px 40px var(--sw-shadow); }
+.sw-duo-line { margin-top:12px !important; font-size:13px; line-height:1.6; color:var(--sw-muted); }
+@media (max-width:1100px) { .sw-devices { margin:0 30px 34px; } }
+@media (max-width:760px) {
+  .sw-devices { margin:0 16px 30px; gap:10px; }
+  .sw-duo { flex-basis:31%; padding:3px; border-radius:9px; }
+  .sw-duo img { border-radius:6px; }
+  .sw-duo-line { font-size:15px; }
+}
