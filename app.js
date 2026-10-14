@@ -52,6 +52,10 @@ $$('.sw-badge img').forEach(i => { i.alt = BADGE_ALT; });
 const CTA = { label: 'App Store', alt: BADGE_ALT, href: 'https://apps.apple.com/app/apple-store/id6817031276?pt=129169856&ct=site&mt=8',
   badge: 'https://toolbox.marketingtools.apple.com/api/badges/download-on-the-app-store/black/en-us?size=250x83&releaseDate=1792738800' };
 let ctaSent = false;
+/* Campaign channel: on the page's own address a link like ?ct=tiktok counts App Store visits
+   for that channel (letters, digits and dashes, up to 30); otherwise they count as the site. */
+const CT = (() => { try { const v = new URLSearchParams(location.search).get('ct'); return v && /^[A-Za-z0-9-]{1,30}$/.test(v) ? v : 'site'; } catch { return 'site'; } })();
+if (CT !== 'site') $$('a[href*="apps.apple.com"]').forEach(a => { a.href = a.href.replace(/([?&]ct=)[^&]*/, '$1' + CT); });
 /* the bar's section links, named here so the WordPress block never needs a paste to rename them */
 const NAV = [['Loop', '#loop'], ['Lyrics', '#words'], ['Share', '#keep'], ['Pricing', '#pricing'], ['Questions', '#questions']];
 function postCta() {

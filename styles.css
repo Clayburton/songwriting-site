@@ -1963,3 +1963,27 @@ html[data-theme=dark] .sw-ipad { box-shadow:0 0 0 1px #4b443b, 18px 28px 50px va
 .sw-badge:focus-visible { outline:2px solid var(--sw-coral); outline-offset:4px; }
 .sw-badge img { display:block; height:54px; width:auto; }
 .sw-badge-small img { height:40px; }
+
+/* C&K SITE BAR: the main site's own menu, drawn on the page's own address (songwriting.clayandkelsy.com)
+   so it reads as part of clayandkelsy.com. Inside WordPress it is hidden, since WordPress draws the real one. */
+.ck-sitebar { background:rgba(255,255,255,.45); border-bottom:1px solid var(--sw-line); font-family:'Courier Prime',ui-monospace,monospace; }
+html[data-theme=dark] .ck-sitebar { background:rgba(0,0,0,.18); }
+.ck-sitebar-inner { max-width:1200px; margin:0 auto; height:76px; padding:0 clamp(16px,4vw,40px); display:flex; align-items:center; justify-content:center; gap:28px; }
+.ck-logo { display:block; line-height:0; flex:none; }
+.ck-logo img { width:63px; height:auto; display:block; }
+.ck-links { display:flex; gap:26px; }
+.ck-links a, .ck-footer-links a { color:var(--sw-ink); text-decoration:none; letter-spacing:.04em; }
+.ck-links a { font-size:18px; }
+.ck-links a:hover, .ck-icon:hover, .ck-footer-links a:hover { color:var(--sw-coral); }
+.ck-icon { color:var(--sw-ink); display:inline-flex; line-height:0; }
+.ck-footer-links { display:flex; flex-wrap:wrap; gap:8px 20px; width:100%; font-family:'Courier Prime',ui-monospace,monospace; font-size:14px; }
+.sw-footer { flex-wrap:wrap; }
+html.embedded .ck-sitebar, body.embedded .ck-sitebar { display:none; }
+@media (max-width:760px) {
+  .ck-sitebar-inner { height:60px; gap:16px; justify-content:flex-start; }
+  .ck-logo img { width:48px; }
+  .ck-links { gap:16px; overflow-x:auto; scrollbar-width:none; -webkit-overflow-scrolling:touch; flex:1; min-width:0; padding-right:18px; -webkit-mask-image:linear-gradient(90deg,#000 82%,transparent); mask-image:linear-gradient(90deg,#000 82%,transparent); }
+  .ck-links::-webkit-scrollbar { display:none; }
+  .ck-links a { font-size:15px; white-space:nowrap; }
+  .ck-footer-links { font-size:13px; gap:8px 16px; }
+}
