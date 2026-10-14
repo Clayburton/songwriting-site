@@ -2,7 +2,8 @@
 :root {
   --sw-paper:#f5efe3;
   --sw-ink:#302e29;
-  --sw-muted:#716c60;
+  --sw-muted:#686358;  /* 8% darker (Oct 14): at least 4.5:1 on every light band, the card, paper, soft and sage */
+  --sw-coral-ink:#aa412e;  /* coral for small text: 4.6:1 or better on every light band */
   --sw-line:#d8cfbe;
   --sw-coral:#ca4d37;
   --sw-card:#faf6ee;
@@ -22,6 +23,7 @@ html[data-theme=dark] {
   --sw-paper:#211f1c;
   --sw-ink:#f2e8d7;
   --sw-muted:#bdb4a4;
+  --sw-coral-ink:#f28c72;
   --sw-line:#4b443b;
   --sw-coral:#f28c72;
   --sw-card:#2d2923;
@@ -391,7 +393,7 @@ html[data-theme=dark] .sw-button {
 .sw-tracklist span {
   font-family:var(--sw-mono);
   font-size:10px;
-  color:var(--sw-coral)
+  color:var(--sw-coral-ink)
 }
 .sw-tracklist b {
   font-weight:400;
@@ -528,8 +530,8 @@ html[data-theme=dark] .sw-button {
   transition:opacity .2s
 }
 .sw-track-number {
-  font:10px var(--sw-mono);
-  color:var(--track)
+  font:11px var(--sw-mono);
+  color:var(--sw-muted)
 }
 .sw-track-name {
   font-size:13px
@@ -563,12 +565,12 @@ html[data-theme=dark] .sw-button {
   height:2px
 }
 .sw-track-state {
-  font:9px var(--sw-mono);
-  border:1px solid currentColor;
+  font:11px var(--sw-mono);
+  border:1px solid var(--track);
   border-radius:20px;
   padding:4px;
   text-align:center;
-  color:var(--track)
+  color:var(--sw-ink)
 }
 .sw-track:hover .sw-track-name {
   color:var(--track)
@@ -781,9 +783,10 @@ html[data-theme=dark] .sw-lyric-editor i {
 }
 .sw-rhyme-legend {
   display:flex;
-  gap:20px;
+  flex-wrap:wrap;
+  gap:8px 20px;
   margin-top:25px;
-  font:9px var(--sw-mono);
+  font:11px var(--sw-mono);
   color:var(--sw-muted);
   border-top:1px solid var(--sw-line);
   padding-top:20px
@@ -1088,8 +1091,8 @@ html[data-theme=dark] .sw-button-outline {
   border:0;
   background:none;
   color:var(--sw-muted);
-  font-size:9px;
-  padding:5px 7px;
+  font-size:11px;
+  padding:5px 8px;
   border-radius:2px
 }
 .sw-billing button[aria-pressed=true] {
@@ -1134,7 +1137,7 @@ html[data-theme=dark] .sw-button-outline {
   display:none
 }
 .sw-faq summary span {
-  color:var(--sw-coral);
+  color:var(--sw-coral-ink);
   font:20px var(--sw-sans)
 }
 .sw-faq details[open] summary span {
@@ -1502,7 +1505,7 @@ to {
   font-size:9px
 }
 .sw-track-state {
-  font-size:8px
+  font-size:11px
 }
 .sw-wave {
   height:35px;
@@ -1987,3 +1990,7 @@ html.embedded .ck-sitebar, body.embedded .ck-sitebar { display:none; }
   .ck-links a { font-size:15px; white-space:nowrap; }
   .ck-footer-links { font-size:13px; gap:8px 16px; }
 }
+
+/* READABILITY (Oct 14): small coloured text keeps 4.5:1 in the dark look too */
+html[data-theme=dark] .sw-rhyme-legend span { filter:brightness(1.7); }
+html[data-theme=dark] .sw-transport button { color:#211f1c; }
