@@ -1,7 +1,7 @@
 <!-- ============================================================
      SONGWRITING: WordPress embed for clayandkelsy.com/songwriting  (paste this whole file as ONE Custom HTML block)
      What it does:
-     · Embeds the Songwriting page (GitHub Pages) full-bleed in an iframe that grows to fit its
+     · Embeds the Songwriting page (GitHub Pages, served at songwriting.clayandkelsy.com) full-bleed in an iframe that grows to fit its
        content, so there is exactly one scrollbar on the page: this one.
      · Draws the product menu bar HERE, fixed to the browser window, so it follows the scroll with
        zero lag. It appears the moment the C&K global header scrolls away and hides while it is on screen.
@@ -42,14 +42,14 @@
 @media (prefers-reduced-motion:reduce){#hook-nav{transition:none}#hook-nav .hn-pill{transition:none}}
 </style>
 <div id="hook-nav" aria-label="Songwriting menu">
-  <a class="hn-brand" href="https://clayandkelsy.com/songwriting/" data-go="#top"><img class="hn-mark" src="https://clayburton.github.io/hook-site/assets/songwriting-mark.webp?v=20260916" alt="" width="168" height="176"><span class="hn-name">Songwriting<small>by Clay and Kelsy</small></span></a>
+  <a class="hn-brand" href="https://clayandkelsy.com/songwriting/" data-go="#top"><img class="hn-mark" src="https://songwriting.clayandkelsy.com/assets/songwriting-mark.webp?v=20260916" alt="" width="168" height="176"><span class="hn-name">Songwriting<small>by Clay and Kelsy</small></span></a>
   <nav class="hn-links" aria-label="Sections"><a href="https://clayandkelsy.com/songwriting/#loop" data-go="#loop">Loop</a><a href="https://clayandkelsy.com/songwriting/#words" data-go="#words">Lyrics</a><a href="https://clayandkelsy.com/songwriting/#keep" data-go="#keep">Share</a><a href="https://clayandkelsy.com/songwriting/#pricing" data-go="#pricing">Pricing</a><a href="https://clayandkelsy.com/songwriting/#questions" data-go="#questions">Questions</a></nav>
   <button class="hn-theme" type="button" aria-label="Toggle dark mode" aria-pressed="false">&#9680;</button>
-  <a class="hn-pill" href="https://clayburton.github.io/hook-site/notify.html">Notify me</a>
+  <a class="hn-pill" href="https://songwriting.clayandkelsy.com/notify.html">Notify me</a>
 </div>
 <div id="hook-embed" style="margin-left:calc(50% - 50vw);margin-right:calc(50% - 50vw);width:100vw;">
   <iframe id="hook-frame"
-    src="https://clayburton.github.io/hook-site/"
+    src="https://songwriting.clayandkelsy.com/"
     title="Songwriting by Clay and Kelsy"
     style="display:block;width:100%;border:0;height:12000px;background:#f5efe3;"
     scrolling="no"
@@ -58,14 +58,14 @@
 </div>
 <script>
 (function () {
-  var ORIGIN = "https://clayburton.github.io";
+  var ORIGIN = "https://songwriting.clayandkelsy.com";  /* the page lives on our own domain, so browsers draw it as part of this site */
   var frame = document.getElementById("hook-frame"), nav = document.getElementById("hook-nav");
   var themeBtn = nav.querySelector(".hn-theme");
   var pill = nav.querySelector(".hn-pill"), pillHref = "";  /* "" means the button is still Notify me */
   /* load the page fresh every visit: this defeats the iframe cache that once served a stale copy */
-  frame.src = ORIGIN + "/hook-site/?v=" + Date.now();
+  frame.src = ORIGIN + "/?v=" + Date.now();
   var lastH = 0;
-  function go(href) { window.scrollTo(0, 0); frame.src = ORIGIN + "/hook-site/" + href + "?v=" + Date.now(); }
+  function go(href) { window.scrollTo(0, 0); frame.src = ORIGIN + "/" + href + "?v=" + Date.now(); }
   window.addEventListener("message", function (e) {
     if (e.origin !== ORIGIN || !e.data) return;
     /* auto-grow: the page posts its content height; the 8px guard stops resize loops */
