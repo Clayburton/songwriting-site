@@ -2009,3 +2009,8 @@ html[data-theme=dark] .sw-duo { box-shadow:0 0 0 1px #4b443b, 14px 22px 40px var
   .sw-duo img { border-radius:6px; }
   .sw-duo-line { font-size:15px; }
 }
+
+/* NOT ON iPHONE (Oct 18): one quiet newsletter line for people who cannot get the app; app.js hides it on iPhone and iPad */
+.sw-finale .sw-not-iphone a { text-decoration:underline; text-decoration-color:var(--sw-line); text-decoration-thickness:1px; text-underline-offset:3px; }
+.sw-finale .sw-not-iphone a:hover { text-decoration-color:currentColor; }
+.sw-finale .sw-not-iphone[hidden] { display:none; }
