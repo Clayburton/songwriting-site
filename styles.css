@@ -2044,6 +2044,22 @@ html[data-theme=dark] .sw-thread-end.sw-t1, html[data-theme=dark] .sw-bead.sw-t1
 html[data-theme=dark] .sw-thread-end.sw-t2, html[data-theme=dark] .sw-bead.sw-t2 { fill:#9ac4a6; }
 html[data-theme=dark] .sw-thread-end.sw-t3, html[data-theme=dark] .sw-bead.sw-t3 { fill:#cfa4c2; }
 html[data-theme=dark] .sw-together-light, html:not([data-theme=dark]) .sw-together-dark { display:none; }
+/* The lens: the app's own "With Mello and Kelsy" tag, shown twice as large right where it sits on the
+   screen, so the point of the section reads at a glance. It is the same screenshot, magnified (no new
+   words, nothing redrawn). Measured from the 1206 x 2622 capture: the tag spans x 340 to 847, y 575 to 647,
+   so its centre is 49.21% across and 23.30% down; the phone draws the image at 664:1440, so 100cqw wide
+   and 216.87cqw tall. The lens sits 2cqw below the tag so its rim clears the song's title. */
+.sw-chip-lens { display:none; }
+@supports (width:1cqw) {
+  .sw-together-phone { container-type:inline-size; }
+  .sw-chip-lens { display:block; position:absolute; z-index:3; left:4.21cqw; top:45.78cqw; width:90cqw; height:13.5cqw; border-radius:999px;
+    background:url("assets/shared-song-light.webp?v=20261018") -53.42cqw -94.31cqw / 200cqw 433.73cqw no-repeat;
+    box-shadow:0 0 0 1px var(--sw-line), 0 0 0 4px var(--sw-paper), 0 0 0 5px var(--sw-line), 0 14px 28px -10px var(--sw-shadow);
+    transition:opacity .6s 1.7s, transform .7s cubic-bezier(.2,.8,.2,1.15) 1.7s; }
+  html[data-theme=dark] .sw-chip-lens { background-image:url("assets/shared-song-dark.webp?v=20261018"); }
+  .sw-together.is-armed .sw-chip-lens { opacity:0; transform:scale(.9); }
+  .sw-together.is-armed.is-in .sw-chip-lens { opacity:1; transform:none; }
+}
 @media (max-width:1100px) {
   .sw-together { grid-template-columns:1fr; gap:30px; padding:100px 0 110px; }
   .sw-together-copy { order:-1; }
@@ -2057,4 +2073,4 @@ html[data-theme=dark] .sw-together-light, html:not([data-theme=dark]) .sw-togeth
   .sw-thread { stroke-width:2.2; }
   .sw-thread-time { font-size:16px; }
 }
-@media (prefers-reduced-motion:reduce) { .sw-thread, .sw-thread-end, .sw-thread-time { transition:none; } }
+@media (prefers-reduced-motion:reduce) { .sw-thread, .sw-thread-end, .sw-thread-time, .sw-chip-lens { transition:none; } }
