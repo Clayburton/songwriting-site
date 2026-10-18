@@ -2009,3 +2009,52 @@ html[data-theme=dark] .sw-duo { box-shadow:0 0 0 1px #4b443b, 14px 22px 40px var
   .sw-duo img { border-radius:6px; }
   .sw-duo-line { font-size:15px; }
 }
+
+/* WRITE IT TOGETHER (Oct 18): shared songs get a section of their own. Three threads, one per person,
+   start at the same moment in three time zones (9:41 am in Los Angeles is 5:41 pm in London and 1:41 am
+   in Tokyo) and meet in one song; now and then a bead travels a thread into the phone, the way a layer
+   arrives in your part. The threads use the layer colours. Without script, or with reduced motion,
+   everything is simply drawn. */
+.sw-together { padding:120px 0 130px; display:grid; grid-template-columns:1fr .92fr; gap:80px; align-items:center; }
+.sw-together-art { position:relative; min-height:620px; display:flex; align-items:center; justify-content:center; }
+.sw-threads { position:absolute; inset:0; width:100%; height:100%; overflow:visible; }
+.sw-thread { fill:none; stroke-width:1.5; stroke-linecap:round; stroke-dasharray:1; stroke-dashoffset:0; transition:stroke-dashoffset 1.9s cubic-bezier(.2,.7,.2,1); }
+.sw-thread.sw-t1 { stroke:#c58262; } .sw-thread.sw-t2 { stroke:#8b9c73; } .sw-thread.sw-t3 { stroke:#a87c9b; }
+.sw-thread-end.sw-t1, .sw-bead.sw-t1 { fill:#c58262; } .sw-thread-end.sw-t2, .sw-bead.sw-t2 { fill:#8b9c73; } .sw-thread-end.sw-t3, .sw-bead.sw-t3 { fill:#a87c9b; }
+.sw-thread-time { font-family:var(--sw-mono); font-size:10px; letter-spacing:.12em; fill:var(--sw-muted); }
+.sw-thread-end, .sw-thread-time { transition:opacity .7s; }
+.sw-bead { opacity:0; }
+.sw-together.is-armed .sw-thread { stroke-dashoffset:1; }
+.sw-together.is-armed .sw-thread-end, .sw-together.is-armed .sw-thread-time { opacity:0; }
+.sw-together.is-armed.is-in .sw-thread { stroke-dashoffset:0; }
+.sw-together.is-armed.is-in .sw-thread-end, .sw-together.is-armed.is-in .sw-thread-time { opacity:1; }
+.sw-together.is-armed.is-in .sw-thread.sw-t2 { transition-delay:.3s; } .sw-together.is-armed.is-in .sw-thread.sw-t3 { transition-delay:.6s; }
+.sw-together-phone { transform:rotate(-4deg); }
+.sw-together-phone:hover { transform:rotate(0); }
+.sw-together h2 { font-size:clamp(48px,5.2vw,76px); margin:23px 0 30px; line-height:1.02; }
+.sw-together-copy > p:not(.sw-eyebrow):not(.sw-together-facts) { font-size:15px; line-height:1.9; color:var(--sw-muted); margin-bottom:16px; max-width:470px; }
+.sw-together-facts { font-family:var(--sw-mono); font-size:10px; letter-spacing:.12em; text-transform:uppercase; line-height:1.9; color:var(--sw-muted); margin-top:26px; }
+.sw-together-facts span { white-space:nowrap; }
+.sw-together-facts i { font-style:normal; margin:0 5px; }
+.sw-together-quote { margin:40px 0 0; padding-left:22px; border-left:1px solid var(--sw-line); max-width:440px; }
+.sw-together-quote p { font-family:var(--sw-serif); font-style:italic; font-size:19px; line-height:1.5; color:var(--sw-ink); }
+.sw-together-quote cite { display:block; margin-top:12px; font-family:var(--sw-mono); font-style:normal; font-size:10px; letter-spacing:.12em; text-transform:uppercase; color:var(--sw-muted); }
+html[data-theme=dark] .sw-thread.sw-t1 { stroke:#e5a78f; } html[data-theme=dark] .sw-thread.sw-t2 { stroke:#9ac4a6; } html[data-theme=dark] .sw-thread.sw-t3 { stroke:#cfa4c2; }
+html[data-theme=dark] .sw-thread-end.sw-t1, html[data-theme=dark] .sw-bead.sw-t1 { fill:#e5a78f; }
+html[data-theme=dark] .sw-thread-end.sw-t2, html[data-theme=dark] .sw-bead.sw-t2 { fill:#9ac4a6; }
+html[data-theme=dark] .sw-thread-end.sw-t3, html[data-theme=dark] .sw-bead.sw-t3 { fill:#cfa4c2; }
+html[data-theme=dark] .sw-together-light, html:not([data-theme=dark]) .sw-together-dark { display:none; }
+@media (max-width:1100px) {
+  .sw-together { grid-template-columns:1fr; gap:30px; padding:100px 0 110px; }
+  .sw-together-copy { order:-1; }
+  .sw-together-art { min-height:600px; }
+}
+@media (max-width:760px) {
+  .sw-together { padding:80px 0 90px; }
+  .sw-together h2 { font-size:44px; }
+  .sw-together-art { min-height:470px; }
+  .sw-together-phone { width:192px; }
+  .sw-thread { stroke-width:2.2; }
+  .sw-thread-time { font-size:16px; }
+}
+@media (prefers-reduced-motion:reduce) { .sw-thread, .sw-thread-end, .sw-thread-time { transition:none; } }

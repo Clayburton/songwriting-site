@@ -57,7 +57,7 @@ let ctaSent = false;
 const CT = (() => { try { const v = new URLSearchParams(location.search).get('ct'); return v && /^[A-Za-z0-9-]{1,30}$/.test(v) ? v : 'site'; } catch { return 'site'; } })();
 if (CT !== 'site') $$('a[href*="apps.apple.com"]').forEach(a => { a.href = a.href.replace(/([?&]ct=)[^&]*/, '$1' + CT); });
 /* the bar's section links, named here so the WordPress block never needs a paste to rename them */
-const NAV = [['Loop', '#loop'], ['Lyrics', '#words'], ['Share', '#keep'], ['Pricing', '#pricing'], ['Questions', '#questions']];
+const NAV = [['Loop', '#loop'], ['Lyrics', '#words'], ['Share', '#together'], ['Pricing', '#pricing'], ['Questions', '#questions']];
 function postCta() {
   if (!IS_EMBEDDED) return;
   parent.postMessage({ hook: 'cta', label: CTA.label, href: CTA.href, badge: CTA.badge, alt: CTA.alt }, '*');
@@ -430,6 +430,28 @@ window.addEventListener('pagehide', stopAudio);
     const warm = () => { if (im.decode) im.decode().catch(() => {}); };
     if (im.complete) warm(); else im.addEventListener('load', warm, { once: true });
   });
+})();
+
+/* WRITE IT TOGETHER (Oct 18): the threads draw in when the section comes into view (the host's
+   viewport when embedded), then a bead now and then travels each thread into the song. Reduced
+   motion, or no script: the threads are simply drawn. */
+(() => {
+  const sec = $('.sw-together'); if (!sec || reduced) return;
+  const anims = [...sec.querySelectorAll('.sw-bead animateMotion, .sw-bead animate')];
+  sec.classList.add('is-armed');
+  let done = false;
+  scrollHandlers.push(() => {
+    if (done) return;
+    const t = relTop(sec), h = sec.getBoundingClientRect().height;
+    if (vpH() * 0.72 > t && t + h > 0) {
+      done = true;
+      sec.classList.add('is-in');
+      setTimeout(() => anims.forEach(a => { try { a.beginElementAt(+a.dataset.delay || 0); } catch {} }), 2300);
+    }
+  });
+  tick();
+  /* if the host never reports its viewport, draw the threads anyway rather than leave them hidden */
+  if (IS_EMBEDDED) setTimeout(() => { if (!done && !host.ready) { done = true; sec.classList.add('is-in'); } }, 4000);
 })();
 
 /* FAQ toggles change page height */
