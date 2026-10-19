@@ -2022,12 +2022,13 @@ html[data-theme=dark] .sw-duo { box-shadow:0 0 0 1px #4b443b, 14px 22px 40px var
 .sw-thread.sw-t1 { stroke:#c58262; } .sw-thread.sw-t2 { stroke:#8b9c73; } .sw-thread.sw-t3 { stroke:#a87c9b; }
 .sw-thread-end.sw-t1, .sw-bead.sw-t1 { fill:#c58262; } .sw-thread-end.sw-t2, .sw-bead.sw-t2 { fill:#8b9c73; } .sw-thread-end.sw-t3, .sw-bead.sw-t3 { fill:#a87c9b; }
 .sw-thread-time { font-family:var(--sw-mono); font-size:10px; letter-spacing:.12em; fill:var(--sw-muted); }
-.sw-thread-end, .sw-thread-time { transition:opacity .7s; }
+.sw-thread-name { font-family:var(--sw-serif); font-style:italic; font-size:16px; fill:var(--sw-ink); }
+.sw-thread-end, .sw-thread-time, .sw-thread-name { transition:opacity .7s; }
 .sw-bead { opacity:0; }
 .sw-together.is-armed .sw-thread { stroke-dashoffset:1; }
-.sw-together.is-armed .sw-thread-end, .sw-together.is-armed .sw-thread-time { opacity:0; }
+.sw-together.is-armed .sw-thread-end, .sw-together.is-armed .sw-thread-time, .sw-together.is-armed .sw-thread-name { opacity:0; }
 .sw-together.is-armed.is-in .sw-thread { stroke-dashoffset:0; }
-.sw-together.is-armed.is-in .sw-thread-end, .sw-together.is-armed.is-in .sw-thread-time { opacity:1; }
+.sw-together.is-armed.is-in .sw-thread-end, .sw-together.is-armed.is-in .sw-thread-time, .sw-together.is-armed.is-in .sw-thread-name { opacity:1; }
 .sw-together.is-armed.is-in .sw-thread.sw-t2 { transition-delay:.3s; } .sw-together.is-armed.is-in .sw-thread.sw-t3 { transition-delay:.6s; }
 .sw-together-phone { transform:rotate(-4deg); }
 .sw-together-phone:hover { transform:rotate(0); }
@@ -2072,5 +2073,6 @@ html[data-theme=dark] .sw-together-light, html:not([data-theme=dark]) .sw-togeth
   .sw-together-phone { width:192px; }
   .sw-thread { stroke-width:2.2; }
   .sw-thread-time { font-size:16px; }
+  .sw-thread-name { font-size:23px; }
 }
-@media (prefers-reduced-motion:reduce) { .sw-thread, .sw-thread-end, .sw-thread-time, .sw-chip-lens { transition:none; } }
+@media (prefers-reduced-motion:reduce) { .sw-thread, .sw-thread-end, .sw-thread-time, .sw-thread-name, .sw-chip-lens { transition:none; } }
