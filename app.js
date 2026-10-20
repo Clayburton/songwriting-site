@@ -54,6 +54,9 @@ const CTA = { label: 'App Store', alt: BADGE_ALT, href: 'https://apps.apple.com/
 let ctaSent = false;
 /* Campaign channel: on the page's own address a link like ?ct=tiktok counts App Store visits
    for that channel (letters, digits and dashes, up to 30); otherwise they count as the site. */
+/* Android request (Oct 20): the line under the closing words shows only on Android phones and tablets. */
+const ANDROID = (navigator.userAgentData && navigator.userAgentData.platform === 'Android') || /Android/i.test(navigator.userAgent);
+if (ANDROID) $$('.sw-android-ask').forEach(p => { p.hidden = false; });
 const CT = (() => { try { const v = new URLSearchParams(location.search).get('ct'); return v && /^[A-Za-z0-9-]{1,30}$/.test(v) ? v : 'site'; } catch { return 'site'; } })();
 if (CT !== 'site') $$('a[href*="apps.apple.com"]').forEach(a => { a.href = a.href.replace(/([?&]ct=)[^&]*/, '$1' + CT); });
 /* the bar's section links, named here so the WordPress block never needs a paste to rename them */
