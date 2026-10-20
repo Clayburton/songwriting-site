@@ -2077,8 +2077,15 @@ html[data-theme=dark] .sw-together-light, html:not([data-theme=dark]) .sw-togeth
 }
 @media (prefers-reduced-motion:reduce) { .sw-thread, .sw-thread-end, .sw-thread-time, .sw-thread-name, .sw-chip-lens { transition:none; } }
 
-/* ANDROID REQUEST (Oct 20, Clay's yes): one quiet line under the closing words, shown only on Android by app.js;
-   the link goes to the WordPress thank-you page, which Google Analytics counts as campaign android-request */
-.sw-finale .sw-android-ask[hidden] { display:none; }
-.sw-finale .sw-android-ask a { text-decoration:underline; text-decoration-color:var(--sw-line); text-decoration-thickness:1px; text-underline-offset:3px; }
-.sw-finale .sw-android-ask a:hover { text-decoration-color:currentColor; }
+/* ANDROID REQUEST (Oct 20, Clay's yes): one quiet line in the footer, under Clay & Kelsy and Our promise (Clay moved it
+   out of the closing section the same day), set in the footer's own italic. app.js shows it only on Android; the link
+   goes to the WordPress thank-you page, which Google Analytics counts as campaign android-request. */
+.sw-footer-end { display:flex; flex-direction:column; align-items:flex-end; gap:10px; }
+.sw-footer .sw-android-ask { margin:0; font:italic 14px var(--sw-serif); color:var(--sw-muted); text-align:right; }
+.sw-footer .sw-android-ask[hidden] { display:none; }
+.sw-footer .sw-android-ask a { text-decoration:underline; text-decoration-color:var(--sw-line); text-decoration-thickness:1px; text-underline-offset:3px; }
+.sw-footer .sw-android-ask a:hover { text-decoration-color:currentColor; }
+@media (max-width:760px) {
+  .sw-footer-end { align-items:flex-start; }
+  .sw-footer .sw-android-ask { font-size:15px; text-align:left; }
+}
