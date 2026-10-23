@@ -45,7 +45,7 @@
   <a class="hn-brand" href="https://clayandkelsy.com/songwriting/" data-go="#top"><img class="hn-mark" src="https://songwriting.clayandkelsy.com/assets/songwriting-mark.webp?v=20260916" alt="" width="168" height="176"><span class="hn-name">Songwriting<small>by Clay and Kelsy</small></span></a>
   <nav class="hn-links" aria-label="Sections"><a href="https://clayandkelsy.com/songwriting/#loop" data-go="#loop">Loop</a><a href="https://clayandkelsy.com/songwriting/#words" data-go="#words">Lyrics</a><a href="https://clayandkelsy.com/songwriting/#keep" data-go="#keep">Share</a><a href="https://clayandkelsy.com/songwriting/#pricing" data-go="#pricing">Pricing</a><a href="https://clayandkelsy.com/songwriting/#questions" data-go="#questions">Questions</a></nav>
   <button class="hn-theme" type="button" aria-label="Toggle dark mode" aria-pressed="false">&#9680;</button>
-  <a class="hn-pill" href="https://songwriting.clayandkelsy.com/notify.html">Notify me</a>
+  <a class="hn-pill" href="https://apps.apple.com/app/apple-store/id6817031276?pt=129169856&amp;ct=site&amp;mt=8" target="_blank" rel="noopener">App Store</a>
 </div>
 <div id="hook-embed" style="margin-left:calc(50% - 50vw);margin-right:calc(50% - 50vw);width:100vw;">
   <iframe id="hook-frame"
@@ -61,7 +61,7 @@
   var ORIGIN = "https://songwriting.clayandkelsy.com";  /* the page lives on our own domain, so browsers draw it as part of this site */
   var frame = document.getElementById("hook-frame"), nav = document.getElementById("hook-nav");
   var themeBtn = nav.querySelector(".hn-theme");
-  var pill = nav.querySelector(".hn-pill"), pillHref = "";  /* "" means the button is still Notify me */
+  var pill = nav.querySelector(".hn-pill"), pillHref = pill.getAttribute("href") || "";  /* launched Oct 22: the button starts as the App Store link; the page upgrades it to Apple's badge */
   /* load the page fresh every visit: this defeats the iframe cache that once served a stale copy */
   frame.src = ORIGIN + "/?v=" + Date.now();
   var lastH = 0;
