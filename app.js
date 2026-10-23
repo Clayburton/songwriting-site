@@ -46,11 +46,11 @@ function postBg() {
    this arrives, and takes only an App Store or clayandkelsy.com link, as text. */
 /* Apple's official badge everywhere. Apple's own service draws "Pre-order" until the release
    date in the link and "Download" after it; the words read aloud switch at the same moment. */
-const RELEASED = Date.now() >= 1792738800000;
-const BADGE_ALT = RELEASED ? 'Download on the App Store' : 'Pre-order on the App Store';
+/* Released Oct 22, 2026: Apple's plain badge draws Download (the pre-order badge and its date switch are retired). */
+const BADGE_ALT = 'Download on the App Store';
 $$('.sw-badge img').forEach(i => { i.alt = BADGE_ALT; });
 const CTA = { label: 'App Store', alt: BADGE_ALT, href: 'https://apps.apple.com/app/apple-store/id6817031276?pt=129169856&ct=site&mt=8',
-  badge: 'https://toolbox.marketingtools.apple.com/api/badges/download-on-the-app-store/black/en-us?size=250x83&releaseDate=1792738800' };
+  badge: 'https://toolbox.marketingtools.apple.com/api/badges/download-on-the-app-store/black/en-us?size=250x83' };
 let ctaSent = false;
 /* Campaign channel: on the page's own address a link like ?ct=tiktok counts App Store visits
    for that channel (letters, digits and dashes, up to 30); otherwise they count as the site. */
