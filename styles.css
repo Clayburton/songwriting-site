@@ -2089,3 +2089,7 @@ html[data-theme=dark] .sw-together-light, html:not([data-theme=dark]) .sw-togeth
   .sw-footer-end { align-items:flex-start; }
   .sw-footer .sw-android-ask { font-size:15px; text-align:left; }
 }
+
+/* OUR OWN LOOK (2026-11-10, Wren's rule set, Clay's go): no labels over headings, no numbering, arrows only for a
+   direction. The lyric paper's top row now holds only the EN / ES switch, on the right. */
+.sw-paper-top { justify-content:flex-end; }

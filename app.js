@@ -160,7 +160,7 @@ function toggleTheme() {
   document.documentElement.dataset.theme = dark ? 'dark' : 'light';
   $('.sw-theme').setAttribute('aria-pressed', String(dark));
   $('.sw-theme').setAttribute('aria-label', dark ? 'Turn on light mode' : 'Turn on dark mode');
-  $('#sw-night-switch').innerHTML = (dark ? 'Bring back the daylight' : 'Turn the lights down') + ' <span aria-hidden="true">↗</span>';
+  $('#sw-night-switch').textContent = dark ? 'Bring back the daylight' : 'Turn the lights down';
   document.querySelector('meta[name="theme-color"]').content = dark ? '#211f1c' : '#f5efe3';
   setScreen();
   warmTheme();
