@@ -2093,3 +2093,31 @@ html[data-theme=dark] .sw-together-light, html:not([data-theme=dark]) .sw-togeth
 /* OUR OWN LOOK (2026-11-10, Wren's rule set, Clay's go): no labels over headings, no numbering, arrows only for a
    direction. The lyric paper's top row now holds only the EN / ES switch, on the right. */
 .sw-paper-top { justify-content:flex-end; }
+
+/* ALSO INSIDE, IN LAYERS (2026-11-11) -------------------------------------------
+   Clay: keep it the list it is, give each feature a colour from our palette, make each one stand out, and take no
+   more room. Each line takes the next of the app's own layer colours, in the app's order (HookPalette
+   layerColorHexes 1 to 7: terracotta, ochre, sage, plum, teal, denim, lavender), so the list reads like seven layers
+   of a song and its first four bars are the Songwriting mark's own four. --c is the layer colour (the bar), --ci the
+   same hue dark enough to read on paper, --cn the shade for night (both 4.7:1 or better). The bars hang in the gap
+   beside the list, so the spacing is unchanged. */
+.sw-also .sw-also-list li { position:relative; --tc:var(--ci); }
+html[data-theme=dark] .sw-also .sw-also-list li { --tc:var(--cn); }
+.sw-also .sw-also-list li:nth-child(1) { --c:#B86A4A; --ci:#99593f; --cn:#bf785a; --i:0; }
+.sw-also .sw-also-list li:nth-child(2) { --c:#D9A24C; --ci:#836231; --cn:#D9A24C; --i:1; }
+.sw-also .sw-also-list li:nth-child(3) { --c:#7E9B67; --ci:#5d6e4a; --cn:#7E9B67; --i:2; }
+.sw-also .sw-also-list li:nth-child(4) { --c:#A9668E; --ci:#905878; --cn:#b3789a; --i:3; }
+.sw-also .sw-also-list li:nth-child(5) { --c:#3E9A92; --ci:#34736c; --cn:#3E9A92; --i:4; }
+.sw-also .sw-also-list li:nth-child(6) { --c:#4E86BE; --ci:#426b95; --cn:#598dc1; --i:5; }
+.sw-also .sw-also-list li:nth-child(7) { --c:#8C7BC7; --ci:#6f6198; --cn:#9180c9; --i:6; }
+.sw-also .sw-also-list li::before { content:""; position:absolute; left:-48px; top:calc(.86em - 3.5px); width:30px; height:7px; border-radius:4px; background:var(--c); transform-origin:left center; }
+.sw-also .sw-also-list b, .sw-also .sw-also-list a { color:var(--tc); font-weight:500; }
+.sw-also .sw-also-list a { text-decoration-color:color-mix(in srgb, var(--c) 50%, transparent); text-decoration-thickness:1.5px; }
+.sw-also .sw-also-list a:hover { text-decoration-color:var(--c); }
+/* the bars stack in like layers being added, one after another, when the list comes into view (see app.js) */
+.sw-also.is-armed .sw-also-list li::before { transform:scaleX(0); }
+.sw-also.is-in .sw-also-list li::before { transform:scaleX(1); transition:transform .6s cubic-bezier(.2,.8,.2,1) calc(var(--i) * 90ms); }
+@media (max-width:760px) {
+  /* on a phone the bars hang in the page's 20px side margin, like hanging bullets, so every line wraps as before */
+  .sw-also .sw-also-list li::before { left:-15px; width:10px; height:6px; top:calc(.86em - 3px); border-radius:3px; }
+}

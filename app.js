@@ -457,6 +457,21 @@ window.addEventListener('pagehide', stopAudio);
   if (IS_EMBEDDED) setTimeout(() => { if (!done && !host.ready) { done = true; sec.classList.add('is-in'); } }, 4000);
 })();
 
+/* ALSO INSIDE (Nov 11): the seven layer bars stack in, one after another, when the list comes into view (the
+   host's viewport when embedded). Reduced motion, or no script: the bars are simply there. */
+(() => {
+  const sec = $('.sw-also'); if (!sec || reduced) return;
+  sec.classList.add('is-armed');
+  let done = false;
+  scrollHandlers.push(() => {
+    if (done) return;
+    const t = relTop(sec), h = sec.getBoundingClientRect().height;
+    if (vpH() * 0.85 > t && t + h > 0) { done = true; sec.classList.add('is-in'); }
+  });
+  tick();
+  if (IS_EMBEDDED) setTimeout(() => { if (!done && !host.ready) { done = true; sec.classList.add('is-in'); } }, 4000);
+})();
+
 /* FAQ toggles change page height */
 $$('.sw-faq details').forEach(d => d.addEventListener('toggle', postHeight));
 
