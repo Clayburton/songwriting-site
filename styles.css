@@ -2121,3 +2121,10 @@ html[data-theme=dark] .sw-also .sw-also-list li { --tc:var(--cn); }
   /* on a phone the bars hang in the page's 20px side margin, like hanging bullets, so every line wraps as before */
   .sw-also .sw-also-list li::before { left:-15px; width:10px; height:6px; top:calc(.86em - 3px); border-radius:3px; }
 }
+
+/* ONE-SENTENCE HEADINGS (2026-11-11, Kelsy's words) -----------------------------
+   The headings were three short fragments set very large; each is one sentence now, so the two that were sized for
+   fragments come down to the page's usual heading size and wrap into balanced lines. */
+.sw-site .sw-together h2 { font-size:clamp(42px,4.3vw,62px); line-height:1.04; text-wrap:balance; }
+.sw-site .sw-pricing-heading h2 { max-width:13.5em; margin-inline:auto; text-wrap:balance; }
+@media (max-width:760px) { .sw-site .sw-together h2 { font-size:40px; } }
