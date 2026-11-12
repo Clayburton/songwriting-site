@@ -2132,3 +2132,26 @@ html[data-theme=dark] .sw-also .sw-also-list li { --tc:var(--cn); }
 /* OUR OWN LOOK (2026-11-11): the privacy promises were bulleted with a coral ↗, which on this page means "leaves our
    site" (Clay's Nov 10 rule: arrows only for a direction). A short coral mark takes its place, on the first line. */
 .sw-site .sw-promise li::before { content:''; top:30px; width:12px; height:3px; border-radius:2px; background:var(--sw-coral); }
+
+/* MEET US THROUGH OUR MUSIC (Kelsy's yes, 2026-11-12): the plain link to our music is a small listening card for
+   Memories of Me, going to the song's own page on clayandkelsy.com. Nothing in it comes from Spotify: the cover is
+   saved in assets/. No arrow, since it stays on our site; the play button says what happens. */
+.sw-site .sw-listen { display:grid; grid-template-columns:92px minmax(0,1fr) 54px; gap:20px; align-items:center; max-width:540px;
+  margin-top:30px; padding:14px 20px 14px 14px; border-radius:16px; background:var(--sw-card); border:1px solid var(--sw-line);
+  box-shadow:0 22px 44px -28px rgba(54,41,21,.45); color:var(--sw-ink); text-decoration:none;
+  transition:transform .25s cubic-bezier(.2,.8,.2,1), box-shadow .25s ease, border-color .25s ease; }
+.sw-site .sw-listen img { width:92px; height:92px; border-radius:9px; display:block; object-fit:cover; box-shadow:0 10px 22px -10px rgba(40,28,14,.55); }
+.sw-site .sw-listen-words { display:grid; gap:4px; }
+.sw-site .sw-listen-words strong { font-family:var(--sw-serif); font-weight:400; font-size:24px; line-height:1.15; letter-spacing:-.02em; }
+.sw-site .sw-listen-words > span { font-size:14px; line-height:1.5; color:var(--sw-muted); }
+.sw-site .sw-listen-play { width:54px; height:54px; border-radius:50%; background:var(--sw-coral); display:grid; place-items:center;
+  box-shadow:0 10px 20px -10px rgba(170,65,46,.8); transition:transform .25s cubic-bezier(.2,.8,.2,1); }
+.sw-site .sw-listen-play svg { width:18px; height:18px; margin-left:3px; fill:#fff8ee; }
+html[data-theme=dark] .sw-site .sw-listen { box-shadow:0 22px 44px -28px rgba(0,0,0,.7); }
+html[data-theme=dark] .sw-site .sw-listen-play svg { fill:#251d17; }
+.sw-site .sw-listen:hover { border-color:color-mix(in srgb, var(--sw-coral) 45%, var(--sw-line)); transform:translateY(-2px); box-shadow:0 26px 48px -28px rgba(54,41,21,.55); }
+.sw-site .sw-listen:hover .sw-listen-play { transform:scale(1.06); }
+.sw-site .sw-listen:focus-visible { outline:2px solid var(--sw-coral); outline-offset:3px; }
+@media (prefers-reduced-motion: reduce) { .sw-site .sw-listen, .sw-site .sw-listen-play { transition:none; } .sw-site .sw-listen:hover { transform:none; } .sw-site .sw-listen:hover .sw-listen-play { transform:none; } }
+@media (max-width:760px) { .sw-site .sw-listen { grid-template-columns:76px minmax(0,1fr) 46px; gap:14px; } .sw-site .sw-listen img { width:76px; height:76px; }
+  .sw-site .sw-listen-words strong { font-size:20px; } .sw-site .sw-listen-words > span { font-size:13px; } .sw-site .sw-listen-play { width:46px; height:46px; } }
