@@ -2128,3 +2128,7 @@ html[data-theme=dark] .sw-also .sw-also-list li { --tc:var(--cn); }
 .sw-site .sw-together h2 { font-size:clamp(42px,4.3vw,62px); line-height:1.04; text-wrap:balance; }
 .sw-site .sw-pricing-heading h2 { max-width:13.5em; margin-inline:auto; text-wrap:balance; }
 @media (max-width:760px) { .sw-site .sw-together h2 { font-size:40px; } }
+
+/* OUR OWN LOOK (2026-11-11): the privacy promises were bulleted with a coral ↗, which on this page means "leaves our
+   site" (Clay's Nov 10 rule: arrows only for a direction). A short coral mark takes its place, on the first line. */
+.sw-site .sw-promise li::before { content:''; top:30px; width:12px; height:3px; border-radius:2px; background:var(--sw-coral); }
