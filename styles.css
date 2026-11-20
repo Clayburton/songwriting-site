@@ -2110,6 +2110,8 @@ html[data-theme=dark] .sw-also .sw-also-list li { --tc:var(--cn); }
 .sw-also .sw-also-list li:nth-child(5) { --c:#3E9A92; --ci:#34736c; --cn:#3E9A92; --i:4; }
 .sw-also .sw-also-list li:nth-child(6) { --c:#4E86BE; --ci:#426b95; --cn:#598dc1; --i:5; }
 .sw-also .sw-also-list li:nth-child(7) { --c:#8C7BC7; --ci:#6f6198; --cn:#9180c9; --i:6; }
+.sw-also .sw-also-list li:nth-child(8) { --c:#E0A27C; --ci:#a45627; --cn:#E0A27C; --i:7; } /* apricot (1.2, Nov 20) */
+.sw-also .sw-also-list li:nth-child(9) { --c:#A2A148; --ci:#6f6e31; --cn:#A2A148; --i:8; } /* olive */
 .sw-also .sw-also-list li::before { content:""; position:absolute; left:-48px; top:calc(.86em - 3.5px); width:30px; height:7px; border-radius:4px; background:var(--c); transform-origin:left center; }
 .sw-also .sw-also-list b, .sw-also .sw-also-list a { color:var(--tc); font-weight:500; }
 .sw-also .sw-also-list a { text-decoration-color:color-mix(in srgb, var(--c) 50%, transparent); text-decoration-thickness:1.5px; }
