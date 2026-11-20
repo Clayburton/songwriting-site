@@ -2157,3 +2157,10 @@ html[data-theme=dark] .sw-site .sw-listen-play svg { fill:#251d17; }
 @media (prefers-reduced-motion: reduce) { .sw-site .sw-listen, .sw-site .sw-listen-play { transition:none; } .sw-site .sw-listen:hover { transform:none; } .sw-site .sw-listen:hover .sw-listen-play { transform:none; } }
 @media (max-width:760px) { .sw-site .sw-listen { grid-template-columns:76px minmax(0,1fr) 46px; gap:14px; } .sw-site .sw-listen img { width:76px; height:76px; }
   .sw-site .sw-listen-words strong { font-size:20px; } .sw-site .sw-listen-words > span { font-size:13px; } .sw-site .sw-listen-play { width:46px; height:46px; } }
+
+/* BLACK FRIDAY PRICES (2026-11-20, switched off in app.js until Nov 27): the sale price in coral, the usual price
+   beside it, smaller and struck through. Under them goes Kelsy's approved line. */
+.sw-site .sw-price small:empty { display:none; }
+.sw-site .sw-price.is-sale #sw-price { color:var(--sw-coral); }
+.sw-site .sw-was { font-size:.42em; letter-spacing:-.02em; color:var(--sw-muted); text-decoration-thickness:2px; text-decoration-color:color-mix(in srgb, var(--sw-coral) 70%, transparent); }
+.sw-site .sw-was[hidden] { display:none; }

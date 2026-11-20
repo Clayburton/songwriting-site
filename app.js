@@ -176,17 +176,44 @@ const plans = {
   month: ['$7.99',  'a month', 'Billed monthly. Cancel anytime.'],
   life:  ['$79.99', 'once',    'One payment. No subscription.']
 };
-$$('[data-billing]').forEach(b => b.addEventListener('click', () => {
-  const plan = plans[b.dataset.billing] || plans.year;
-  $$('[data-billing]').forEach(x => x.setAttribute('aria-pressed', String(x === b)));
-  $('#sw-price').textContent = plan[0];
-  $('#sw-period').textContent = plan[1];
-  $('#sw-price-detail').textContent = plan[2];
+/* BLACK FRIDAY 2026 (Hermes's yes, Nov 19). SALE_MODE stays 'off' until the morning of Nov 27, when the app chat says
+   whether Apple shows the yearly first-year offer as live: then 'yearly' (sales lead with the yearly deal, FACTS Nov 9)
+   or 'lifetime' (Lifetime alone). Even when switched on it shows only inside the App Store's sale, Nov 26 8 pm to
+   Dec 1 8 pm Pacific, so it can never show a price the store does not. The lines under the prices are Kelsy's
+   approved caption lines (Nov 10), word for word. A preview for her pictures works only on a local copy:
+   http://localhost:8765/?sale=yearly or ?sale=lifetime. */
+const SALE_MODE = 'off';
+const SALE_START = Date.parse('2026-11-27T04:00:00Z'), SALE_END = Date.parse('2026-12-02T04:00:00Z');
+const salePrices = {
+  year: ['$19.99', '$29.99', '$19.99 for the first year, usually $29.99, for new subscribers.'],
+  life: ['$49.99', '$79.99', 'Lifetime $49.99, usually $79.99.']
+};
+const sale = (() => {
+  const local = location.hostname === 'localhost' || location.hostname === '127.0.0.1';
+  const preview = local ? new URLSearchParams(location.search).get('sale') : null;
+  if (preview === 'yearly' || preview === 'lifetime') return preview;
+  const now = Date.now();
+  return (SALE_MODE === 'yearly' || SALE_MODE === 'lifetime') && now >= SALE_START && SALE_END > now ? SALE_MODE : null;
+})();
+/* which plans are on sale: both in the yearly version; Lifetime alone in the other (the store's Lifetime sale runs either way) */
+const onSale = key => sale === 'yearly' ? (key === 'year' || key === 'life') : sale === 'lifetime' ? key === 'life' : false;
+function setPlan(key) {
+  const plan = plans[key] || plans.year;
+  const deal = onSale(key) ? salePrices[key] : null;
+  $$('[data-billing]').forEach(x => x.setAttribute('aria-pressed', String(x.dataset.billing === key)));
+  $('#sw-price').textContent = deal ? deal[0] : plan[0];
+  $('#sw-period').textContent = deal ? '' : plan[1];
+  const was = $('#sw-was');
+  if (was) { was.textContent = deal ? deal[1] : ''; was.hidden = !deal; }
+  $('#sw-price').closest('.sw-price').classList.toggle('is-sale', !!deal);
+  $('#sw-price-detail').textContent = deal ? deal[2] : plan[2];
   /* "Cancel anytime" belongs to the two subscriptions, never to Lifetime */
   const cancel = $('#sw-cancel');
-  if (cancel) cancel.hidden = b.dataset.billing === 'life';
-  postHeight();
-}));
+  if (cancel) cancel.hidden = key === 'life';
+}
+$$('[data-billing]').forEach(b => b.addEventListener('click', () => { setPlan(b.dataset.billing); postHeight(); }));
+/* the sale leads with its own plan: Yearly in the yearly version, Lifetime in the other */
+if (sale) setPlan(sale === 'lifetime' ? 'life' : 'year');
 
 /* REAL RHYME ENGINE ---------------------------------------------------------- */
 /* The app's actual phonetic engine (assets/rhyme-engine.js) with the same English
