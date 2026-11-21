@@ -2182,3 +2182,10 @@ html:lang(ja) .ck-footer-links, html:lang(zh) .ck-footer-links { font-family:'Co
 /* each phrase of the Japanese headline on its own line: its characters run wider than the Latin it replaces */
 html:lang(ja) .sw-site .sw-hero h1 { font-size:clamp(52px,6.2vw,96px); line-height:1.06; }
 html:lang(zh) .sw-site .sw-hero h1 { line-height:1.04; }
+/* the Japanese and Chinese headings break only between whole phrases (spans of class nw), so no line starts with a
+   character that reads as a dash when large (一), and no character is left alone on a line (Clay, Nov 21) */
+html:lang(ja) .sw-site .nw, html:lang(zh) .sw-site .nw { white-space:nowrap; }
+html:lang(ja) .sw-site .sw-hero h1, html:lang(zh) .sw-site .sw-hero h1 { font-size:clamp(44px,6.2vw,96px); }
+/* Japanese and Chinese fonts have no italic, and a browser-made slant looks cheap: never fake it. English words with a
+   real italic (by Clay and Kelsy) keep theirs. */
+html:lang(ja) .sw-site, html:lang(zh) .sw-site { font-synthesis:weight small-caps; font-synthesis-style:none; }
