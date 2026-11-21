@@ -176,25 +176,31 @@ const plans = {
   month: ['$7.99',  'a month', 'Billed monthly. Cancel anytime.'],
   life:  ['$79.99', 'once',    'One payment. No subscription.']
 };
-/* BLACK FRIDAY 2026 (Hermes's yes, Nov 19). SALE_MODE stays 'off' until the morning of Nov 27, when the app chat says
-   whether Apple shows the yearly first-year offer as live: then 'yearly' (sales lead with the yearly deal, FACTS Nov 9)
-   or 'lifetime' (Lifetime alone). Even when switched on it shows only inside the App Store's sale, Nov 26 8 pm to
-   Dec 1 8 pm Pacific, so it can never show a price the store does not. The lines under the prices are Kelsy's
-   approved caption lines (Nov 10), word for word. A preview for her pictures works only on a local copy:
+/* BLACK FRIDAY 2026. Version A, yearly first (sales lead with the yearly deal, FACTS Nov 9), approved by Clay and
+   Kelsy on Nov 21 (Wren h-20261121-4a04). Clay's condition: the sale shows only while it is really live on the App
+   Store, in step with the WordPress cards. So it shows only inside Wren's window, Nov 26 9:00 pm to Dec 1 7:30 pm
+   Pacific (an hour after Apple's switch, half an hour before its end), AND only while clayandkelsy.com's check of
+   Apple's US App Store page answers {"live":true}. If the check fails, is slow or says anything else, the card keeps
+   its normal prices. US prices only: the Japanese and Chinese pages never show it. The lines under the prices are
+   Kelsy's approved caption lines (Nov 10), word for word. A preview works only on a local copy, without the check:
    http://localhost:8765/?sale=yearly or ?sale=lifetime. */
-const SALE_MODE = 'off';
-const SALE_START = Date.parse('2026-11-27T04:00:00Z'), SALE_END = Date.parse('2026-12-02T04:00:00Z');
+const SALE_MODE = 'yearly';
+const SALE_START = Date.parse('2026-11-27T05:00:00Z'), SALE_END = Date.parse('2026-12-02T03:30:00Z');
+const SALE_CHECK = 'https://clayandkelsy.com/wp-json/ck/v1/sw-sale';
 const salePrices = {
   year: ['$19.99', '$29.99', '$19.99 for the first year, usually $29.99, for new subscribers.'],
   life: ['$49.99', '$79.99', 'Lifetime $49.99, usually $79.99.']
 };
-const sale = (() => {
+let sale = null;
+const salePreview = (() => {
   const local = location.hostname === 'localhost' || location.hostname === '127.0.0.1';
-  const preview = local ? new URLSearchParams(location.search).get('sale') : null;
-  if (preview === 'yearly' || preview === 'lifetime') return preview;
-  const now = Date.now();
-  return (SALE_MODE === 'yearly' || SALE_MODE === 'lifetime') && now >= SALE_START && SALE_END > now ? SALE_MODE : null;
+  const q = local ? new URLSearchParams(location.search).get('sale') : null;
+  return q === 'yearly' || q === 'lifetime' ? q : null;
 })();
+const saleWindowOpen = () => {
+  const now = Date.now();
+  return (SALE_MODE === 'yearly' || SALE_MODE === 'lifetime') && now >= SALE_START && SALE_END > now;
+};
 /* which plans are on sale: both in the yearly version; Lifetime alone in the other (the store's Lifetime sale runs either way) */
 const onSale = key => sale === 'yearly' ? (key === 'year' || key === 'life') : sale === 'lifetime' ? key === 'life' : false;
 function setPlan(key) {
@@ -212,8 +218,26 @@ function setPlan(key) {
   if (cancel) cancel.hidden = key === 'life';
 }
 $$('[data-billing]').forEach(b => b.addEventListener('click', () => { setPlan(b.dataset.billing); postHeight(); }));
-/* the sale leads with its own plan: Yearly in the yearly version, Lifetime in the other */
-if (sale) setPlan(sale === 'lifetime' ? 'life' : 'year');
+/* turn the sale on: right away for a local preview; otherwise only inside the window and only if the live check says
+   so. The card opens on the sale's own plan, unless the visitor has already picked a tab, which it keeps. */
+function startSale(mode) {
+  sale = mode;
+  const picked = $('[data-billing][aria-pressed="true"]');
+  const touched = picked && picked.dataset.touched;
+  setPlan(touched ? picked.dataset.billing : (mode === 'lifetime' ? 'life' : 'year'));
+  postHeight();
+}
+$$('[data-billing]').forEach(b => b.addEventListener('click', () => { b.dataset.touched = '1'; }, {capture: true}));
+if (salePreview) startSale(salePreview);
+else if (saleWindowOpen() && !/^(ja|zh)/.test(document.documentElement.lang)) {
+  const ctl = 'AbortController' in window ? new AbortController() : null;
+  const timer = setTimeout(() => ctl && ctl.abort(), 6000);
+  fetch(SALE_CHECK, {cache: 'no-store', signal: ctl ? ctl.signal : undefined})
+    .then(r => r.ok ? r.json() : null)
+    .then(j => { if (j && j.live === true && saleWindowOpen()) startSale(SALE_MODE); })
+    .catch(() => {})
+    .finally(() => clearTimeout(timer));
+}
 
 /* REAL RHYME ENGINE ---------------------------------------------------------- */
 /* The app's actual phonetic engine (assets/rhyme-engine.js) with the same English
