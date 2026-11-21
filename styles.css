@@ -2164,3 +2164,21 @@ html[data-theme=dark] .sw-site .sw-listen-play svg { fill:#251d17; }
 .sw-site .sw-price.is-sale #sw-price { color:var(--sw-coral); }
 .sw-site .sw-was { font-size:.42em; letter-spacing:-.02em; color:var(--sw-muted); text-decoration-thickness:2px; text-decoration-color:color-mix(in srgb, var(--sw-coral) 70%, transparent); }
 .sw-site .sw-was[hidden] { display:none; }
+
+/* JAPANESE AND CHINESE COPIES (ja.html, zh.html, 2026-11-21): our three fonts carry no Japanese or Chinese letters, so
+   each language names its own system fonts after them (Latin words such as Songwriting keep our fonts). Italic is
+   faked for these scripts, so the coral phrases stay upright and keep only their colour; headings drop the tight
+   Latin tracking, and Japanese headings break between phrases, never inside a word. */
+html:lang(ja) { --sw-serif:'Source Serif 4','Hiragino Mincho ProN','Yu Mincho','Noto Serif JP',Georgia,serif;
+  --sw-sans:'Nunito','Hiragino Sans','Hiragino Kaku Gothic ProN','Yu Gothic','Noto Sans JP',system-ui,sans-serif;
+  --sw-mono:ui-monospace,SFMono-Regular,Menlo,'Hiragino Sans','Noto Sans JP',monospace; }
+html:lang(zh) { --sw-serif:'Source Serif 4','Songti SC','STSong','Noto Serif SC','SimSun',Georgia,serif;
+  --sw-sans:'Nunito','PingFang SC','Hiragino Sans GB','Microsoft YaHei','Noto Sans SC',system-ui,sans-serif;
+  --sw-mono:ui-monospace,SFMono-Regular,Menlo,'PingFang SC','Noto Sans SC',monospace; }
+html:lang(ja) .sw-site em, html:lang(zh) .sw-site em { font-style:normal; }
+html:lang(ja) .sw-site :is(h1,h2,h3,.sw-price), html:lang(zh) .sw-site :is(h1,h2,h3,.sw-price) { letter-spacing:0; }
+html:lang(ja) .sw-site :is(h1,h2,h3) { word-break:auto-phrase; line-break:strict; }
+html:lang(ja) .ck-footer-links, html:lang(zh) .ck-footer-links { font-family:'Courier Prime',ui-monospace,var(--sw-sans); }
+/* each phrase of the Japanese headline on its own line: its characters run wider than the Latin it replaces */
+html:lang(ja) .sw-site .sw-hero h1 { font-size:clamp(52px,6.2vw,96px); line-height:1.06; }
+html:lang(zh) .sw-site .sw-hero h1 { line-height:1.04; }

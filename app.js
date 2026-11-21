@@ -47,10 +47,13 @@ function postBg() {
 /* Apple's official badge everywhere. Apple's own service draws "Pre-order" until the release
    date in the link and "Download" after it; the words read aloud switch at the same moment. */
 /* Released Oct 22, 2026: Apple's plain badge draws Download (the pre-order badge and its date switch are retired). */
-const BADGE_ALT = 'Download on the App Store';
+/* Language copies (ja.html, zh.html) set window.SW_I18N before this file: English sentence -> its translation. */
+const I18N = window.SW_I18N || {};
+const tr = s => (Object.prototype.hasOwnProperty.call(I18N, s) ? I18N[s] : s);
+const BADGE_ALT = tr('Download on the App Store');
 $$('.sw-badge img').forEach(i => { i.alt = BADGE_ALT; });
-const CTA = { label: 'App Store', alt: BADGE_ALT, href: 'https://apps.apple.com/app/apple-store/id6817031276?pt=129169856&ct=site&mt=8',
-  badge: 'https://toolbox.marketingtools.apple.com/api/badges/download-on-the-app-store/black/en-us?size=250x83' };
+const CTA = { label: 'App Store', alt: BADGE_ALT, href: tr('https://apps.apple.com/app/apple-store/id6817031276?pt=129169856&ct=site&mt=8'),
+  badge: tr('https://toolbox.marketingtools.apple.com/api/badges/download-on-the-app-store/black/en-us?size=250x83') };
 let ctaSent = false;
 /* Campaign channel: on the page's own address a link like ?ct=tiktok counts App Store visits
    for that channel (letters, digits and dashes, up to 30); otherwise they count as the site. */
@@ -148,7 +151,7 @@ function warmTheme() { const i = isDark() ? 1 : 0; Object.values(screens).forEac
 function setScreen() {
   const s = screens[screen];
   heroScreen.src = 'assets/' + s[isDark() ? 1 : 0] + V;
-  heroScreen.alt = s[2];
+  heroScreen.alt = tr(s[2]);
 }
 $$('[data-screen]').forEach(b => b.addEventListener('click', () => {
   screen = b.dataset.screen;
@@ -159,8 +162,8 @@ function toggleTheme() {
   const dark = !isDark();
   document.documentElement.dataset.theme = dark ? 'dark' : 'light';
   $('.sw-theme').setAttribute('aria-pressed', String(dark));
-  $('.sw-theme').setAttribute('aria-label', dark ? 'Turn on light mode' : 'Turn on dark mode');
-  $('#sw-night-switch').textContent = dark ? 'Bring back the daylight' : 'Turn the lights down';
+  $('.sw-theme').setAttribute('aria-label', tr(dark ? 'Turn on light mode' : 'Turn on dark mode'));
+  $('#sw-night-switch').textContent = tr(dark ? 'Bring back the daylight' : 'Turn the lights down');
   document.querySelector('meta[name="theme-color"]').content = dark ? '#211f1c' : '#f5efe3';
   setScreen();
   warmTheme();
@@ -172,9 +175,9 @@ $('#sw-night-switch').addEventListener('click', toggleTheme);
 
 /* PRICING -------------------------------------------------------------------- */
 const plans = {
-  year:  ['$29.99', 'a year',  'About $2.50 a month, billed annually.'],
-  month: ['$7.99',  'a month', 'Billed monthly. Cancel anytime.'],
-  life:  ['$79.99', 'once',    'One payment. No subscription.']
+  year:  ['$29.99', 'a year',  'About $2.50 a month, billed annually.'].map(tr),
+  month: ['$7.99',  'a month', 'Billed monthly. Cancel anytime.'].map(tr),
+  life:  ['$79.99', 'once',    'One payment. No subscription.'].map(tr)
 };
 /* BLACK FRIDAY 2026. Version A, yearly first (sales lead with the yearly deal, FACTS Nov 9), approved by Clay and
    Kelsy on Nov 21 (Wren h-20261121-4a04). Clay's condition: the sale shows only while it is really live on the App
@@ -294,7 +297,7 @@ else if (saleWindowOpen() && !/^(ja|zh)/.test(document.documentElement.lang)) {
     }
     if (a11y) {
       const fams = [...groups.values()].filter(w => w.length > 1);
-      a11y.textContent = fams.length ? 'Rhyme families: ' + fams.map(w => w.join(', ')).join('; ') : 'No repeated rhyme families yet.';
+      a11y.textContent = fams.length ? tr('Rhyme families: ') + fams.map(w => w.join(', ')).join('; ') : tr('No repeated rhyme families yet.');
     }
   }
   function render() {
@@ -323,7 +326,7 @@ else if (saleWindowOpen() && !/^(ja|zh)/.test(document.documentElement.lang)) {
       if (paper) paper.classList.add('sw-rhyme-warming');
       booting = import('./assets/rhyme-engine.js?v=1')
         .then(mod => { engine = mod; return loadDict('en'); })
-        .catch(() => { if (statusEl) statusEl.textContent = 'The rhyme preview could not load. You can still write here.'; })
+        .catch(() => { if (statusEl) statusEl.textContent = tr('The rhyme preview could not load. You can still write here.'); })
         .finally(() => { if (paper) paper.classList.remove('sw-rhyme-warming'); });
     }
     return booting;
@@ -431,9 +434,9 @@ function stopAudio() {
   playing = false; clearInterval(beatTimer);
   for (const s of sources) { try { s.stop(); } catch {} s.disconnect(); } sources = [];
   if (mixer) mixer.dataset.playing = 'false';
-  if (play) { play.setAttribute('aria-pressed', 'false'); play.setAttribute('aria-label', 'Play demo loop'); play.innerHTML = '<span aria-hidden="true">▶</span>'; }
+  if (play) { play.setAttribute('aria-pressed', 'false'); play.setAttribute('aria-label', tr('Play demo loop')); play.innerHTML = '<span aria-hidden="true">▶</span>'; }
   $$('.sw-beats i').forEach(i => i.classList.remove('active'));
-  if (statusA) statusA.textContent = 'Press play. Tap a layer to make it yours.';
+  if (statusA) statusA.textContent = tr('Press play. Tap a layer to make it yours.');
 }
 if (play) {
   let starting = false;
@@ -447,20 +450,20 @@ if (play) {
     if (starting) return; starting = true;
     try {
       if (!ctx) initAudio(); await ctx.resume();
-      if (!buffers) { statusA.textContent = 'Loading the song…'; await loadStems(); }
+      if (!buffers) { statusA.textContent = tr('Loading the song…'); await loadStems(); }
       playing = true; startLoop();
       mixer.dataset.playing = 'true'; mixer.style.setProperty('--loop-time', `${LOOP_SEC}s`);
-      play.setAttribute('aria-pressed', 'true'); play.setAttribute('aria-label', 'Pause demo loop'); play.innerHTML = '<span aria-hidden="true">Ⅱ</span>';
-      statusA.textContent = 'Looping. Tap any layer to bring it in or out.';
-    } catch (e) { playing = false; statusA.textContent = 'Sound couldn’t start. Try another browser or press play again.'; }
+      play.setAttribute('aria-pressed', 'true'); play.setAttribute('aria-label', tr('Pause demo loop')); play.innerHTML = '<span aria-hidden="true">Ⅱ</span>';
+      statusA.textContent = tr('Looping. Tap any layer to bring it in or out.');
+    } catch (e) { playing = false; statusA.textContent = tr('Sound couldn’t start. Try another browser or press play again.'); }
     finally { starting = false; }
   });
 }
 $$('[data-track]').forEach(b => b.addEventListener('click', () => {
   const i = Number(b.dataset.track); activeTrk[i] = !activeTrk[i];
   b.setAttribute('aria-pressed', String(activeTrk[i]));
-  b.setAttribute('aria-label', `${trackNames[i]} layer, ${activeTrk[i] ? 'on; click to mute' : 'muted; click to enable'}`);
-  b.querySelector('.sw-track-state').textContent = activeTrk[i] ? 'On' : 'Off';
+  b.setAttribute('aria-label', tr(`${trackNames[i]} layer, ${activeTrk[i] ? 'on; click to mute' : 'muted; click to enable'}`));
+  b.querySelector('.sw-track-state').textContent = tr(activeTrk[i] ? 'On' : 'Off');
   if (ctx) gains[i].gain.setTargetAtTime(activeTrk[i] ? 1 : 0, ctx.currentTime, .025);
 }));
 const volEl = $('#sw-volume');
