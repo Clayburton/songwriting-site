@@ -232,7 +232,7 @@ function startSale(mode) {
 }
 $$('[data-billing]').forEach(b => b.addEventListener('click', () => { b.dataset.touched = '1'; }, {capture: true}));
 if (salePreview) startSale(salePreview);
-else if (saleWindowOpen() && !/^(ja|zh)/.test(document.documentElement.lang)) {
+else if (saleWindowOpen() && document.documentElement.lang === 'en') {
   const ctl = 'AbortController' in window ? new AbortController() : null;
   const timer = setTimeout(() => ctl && ctl.abort(), 6000);
   fetch(SALE_CHECK, {cache: 'no-store', signal: ctl ? ctl.signal : undefined})
@@ -261,6 +261,9 @@ else if (saleWindowOpen() && !/^(ja|zh)/.test(document.documentElement.lang)) {
   /* engine.analyze(DEFAULTS.en) with the real engine and English dictionary, 2026-09-28 */
   const BAKED_EN = [{start:27,end:32,group:0},{start:39,end:50,group:0},{start:59,end:65,group:0},{start:71,end:73,group:1},{start:92,end:96,group:1},{start:124,end:128,group:1}];
   const bakedOk = DEFAULTS.en.slice(27, 32) === 'night' && DEFAULTS.en.slice(124, 128) === 'keep';
+  /* engine.analyze(DEFAULTS.es), the same way (tools/bake-rhymes-es.mjs, 2026-11-23): the Spanish copy opens on it */
+  const BAKED_ES = [{start:7,end:12,group:0},{start:13,end:18,group:0},{start:22,end:25,group:1},{start:36,end:43,group:2},{start:48,end:56,group:1},{start:67,end:70,group:2},{start:77,end:84,group:2},{start:104,end:111,group:2}];
+  const bakedEsOk = DEFAULTS.es.slice(7, 12) === 'noche' && DEFAULTS.es.slice(104, 111) === 'corazón';
   let engine = null, lang = 'en', booting = null, timer;
   const loaded = {};
   const ready = () => engine && engine.englishReady() && (lang === 'en' || engine.spanishReady());
@@ -304,6 +307,7 @@ else if (saleWindowOpen() && !/^(ja|zh)/.test(document.documentElement.lang)) {
     const text = input.value;
     if (ready()) return paint(text, engine.analyze(text));
     if (lang === 'en' && bakedOk && text === DEFAULTS.en) return paint(text, BAKED_EN);
+    if (lang === 'es' && bakedEsOk && text === DEFAULTS.es) return paint(text, BAKED_ES);
     mirror.textContent = text + (text.endsWith('\n') || text === '' ? '​' : '');
     mirror.scrollTop = input.scrollTop;
   }
@@ -340,21 +344,22 @@ else if (saleWindowOpen() && !/^(ja|zh)/.test(document.documentElement.lang)) {
       }
     }).then(render);
   }
-  input.addEventListener('focus', boot, { once: true });
-  input.addEventListener('pointerdown', boot, { once: true });
+  input.addEventListener('focus', () => ensureLang(), { once: true });
+  input.addEventListener('pointerdown', () => ensureLang(), { once: true });
 
-  $$('[data-lang]').forEach(b => b.addEventListener('click', () => {
-    const next = b.dataset.lang;
+  function switchLang(next, fromClick) {
     if (next === lang) return;
     lang = next;
-    $$('[data-lang]').forEach(x => x.setAttribute('aria-pressed', String(x === b)));
+    $$('[data-lang]').forEach(x => x.setAttribute('aria-pressed', String(x.dataset.lang === next)));
     input.value = DEFAULTS[lang] || input.value;
     input.lang = lang;
     if (title) title.textContent = lang === 'en' ? 'Velvet Night' : 'Una canción por terminar';
     render();
-    ensureLang();
-    input.focus();
-  }));
+    if (fromClick) { ensureLang(); input.focus(); }
+  }
+  $$('[data-lang]').forEach(b => b.addEventListener('click', () => switchLang(b.dataset.lang, true)));
+  /* the Spanish copy opens on the Spanish verse, coloured from BAKED_ES; nothing downloads until someone writes */
+  if (/^es/.test(document.documentElement.lang)) switchLang('es', false);
   render();
 })();
 
