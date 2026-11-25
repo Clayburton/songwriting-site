@@ -2189,3 +2189,8 @@ html:lang(ja) .sw-site .sw-hero h1, html:lang(zh) .sw-site .sw-hero h1 { font-si
 /* Japanese and Chinese fonts have no italic, and a browser-made slant looks cheap: never fake it. English words with a
    real italic (by Clay and Kelsy) keep theirs. */
 html:lang(ja) .sw-site, html:lang(zh) .sw-site { font-synthesis:weight small-caps; font-synthesis-style:none; }
+
+/* GET A MONTH FREE (Clay, Nov 24; shown from Dec 2): the free month is a month of Unlimited, so its button sits in that
+   card, under what Unlimited gives you, full width in the page's own coral. Hidden until its date (app.js). */
+.sw-site .sw-free-month { display:flex; width:100%; margin:6px 0 24px; padding:16px 20px; font-size:14px; letter-spacing:.01em; }
+.sw-site .sw-free-month[hidden] { display:none; }

@@ -242,6 +242,19 @@ else if (saleWindowOpen() && document.documentElement.lang === 'en') {
     .finally(() => clearTimeout(timer));
 }
 
+/* GET A MONTH FREE (Clay, Nov 24): goes to Wren's sign-up page, where the welcome email gives the App Store code. That
+   page publishes itself on Dec 2 at 12:00 am Pacific, after the Black Friday sale; the button shows from 12:15 am, on the
+   English page only (the sign-up and the email are English). The address goes in only then, so link checks never meet the
+   sign-up page before it exists. A preview works only on a local copy: ?freemonth=1 */
+const FREE_MONTH_FROM = Date.parse('2026-12-02T08:15:00Z');
+(() => {
+  const b = $('.sw-free-month');
+  if (!b) return;
+  const local = location.hostname === 'localhost' || location.hostname === '127.0.0.1';
+  const preview = local && new URLSearchParams(location.search).get('freemonth') === '1';
+  if (preview || (document.documentElement.lang === 'en' && Date.now() >= FREE_MONTH_FROM)) { b.href = b.dataset.href; b.hidden = false; postHeight(); }
+})();
+
 /* REAL RHYME ENGINE ---------------------------------------------------------- */
 /* The app's actual phonetic engine (assets/rhyme-engine.js) with the same English
    and Spanish dictionaries. The opening verse arrives already coloured: the
